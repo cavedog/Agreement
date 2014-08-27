@@ -72,11 +72,8 @@ public class mainFrame extends JFrame {
 		setResizable(false);
 		
 		toolPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		//enterPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
-		//labelsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		//donePanel.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
 		labelsPanel.setLayout(new GridLayout(9,1));
-		//enterPanel.setLayout(new GridLayout(9,1));
+		
 		
 		
 		add(enterPanel, BorderLayout.CENTER);
@@ -134,7 +131,20 @@ public class mainFrame extends JFrame {
 			}
 		});
 		
-		
+		clearButton.addActionListener(new ActionListener() {
+		    
+		   public void actionPerformed(ActionEvent e) {
+			dateOfAgreement.setText(null);
+			surname.setText(null);
+			name.setText(null);
+			secondName.setText(null);
+			passportNumber.setText(null);
+			passportIssuance.setText(null);
+			inn.setText(null);
+			adress.setText(null);
+			eMail.setText(null);
+		    }
+		});
 	}
 
 }
