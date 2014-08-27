@@ -25,7 +25,8 @@ public class Settings extends JFrame {
     JTextField	pathToAgreements = new JTextField(30);
 	JTextField	pathToTemplates = new JTextField(30);
 	JTextField	pathToWordApplication = new JTextField(30);
-	JButton	clearRegister = new JButton ("Clear  the Register");
+	JButton	createRegister = new JButton ("Create the Register");
+	JButton	clearRegister = new JButton ("Clear the Register");
 	JButton	saveButton = new JButton ("Save settings");
 	JButton BrowseButton1 = new JButton("Browse");
 	JButton BrowseButton2 = new JButton("Browse");
@@ -58,15 +59,16 @@ public class Settings extends JFrame {
 		add(savePanel, BorderLayout.SOUTH);
 		add(browsePanel, BorderLayout.EAST);
 		
-		lbPanel.setLayout(new GridLayout(4,1));
-		contentPanel.setLayout(new GridLayout(4,1));
+		lbPanel.setLayout(new GridLayout(5,1));
+		contentPanel.setLayout(new GridLayout(5,1));
 		savePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		browsePanel.setLayout(new GridLayout(4,1));
+		browsePanel.setLayout(new GridLayout(5,1));
 		
 		
 		lbPanel.add(lbPathToAgreements);
 		lbPanel.add(lbPathToTemplates);
 		lbPanel.add(lbPpathToWordApplication);
+		lbPanel.add (createRegister);
 		lbPanel.add (clearRegister);
 		
 		contentPanel.add(pathToAgreements);
@@ -86,7 +88,7 @@ public class Settings extends JFrame {
 	        public void actionPerformed(ActionEvent e)   {
 	        	JFileChooser chooser = new JFileChooser(); 
 	    	    chooser.setCurrentDirectory(new java.io.File("."));
-	    	    chooser.setDialogTitle("GET PATH");
+	    	    chooser.setDialogTitle("Get Path to Folder with Agreements ");
 	    	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	    	    chooser.setAcceptAllFileFilterUsed(false);
 	    	    if (chooser.showOpenDialog(pathToAgreements) == JFileChooser.APPROVE_OPTION) { 
@@ -100,7 +102,7 @@ public class Settings extends JFrame {
 	        public void actionPerformed(ActionEvent e)   {
 	        	JFileChooser chooser = new JFileChooser(); 
 	    	    chooser.setCurrentDirectory(new java.io.File("."));
-	    	    chooser.setDialogTitle("GET PATH");
+	    	    chooser.setDialogTitle("Get Path to Templates Folder");
 	    	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	    	    chooser.setAcceptAllFileFilterUsed(false);
 	    	    if (chooser.showOpenDialog(pathToTemplates) == JFileChooser.APPROVE_OPTION) { 
