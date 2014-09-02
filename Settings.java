@@ -23,7 +23,7 @@ public class Settings extends JFrame {
 	
     
     JTextField	pathToAgreements = new JTextField(30);
-	JTextField	pathToTemplates = new JTextField(30);
+	JTextField	pathToTemplate = new JTextField(30);
 	JTextField	pathToWordApplication = new JTextField(30);
 	JButton	createRegister = new JButton ("Create the Register");
 	JButton	clearRegister = new JButton ("Clear the Register");
@@ -33,7 +33,7 @@ public class Settings extends JFrame {
 	JButton BrowseButton3 = new JButton("Browse");
 	
 	JLabel	lbPathToAgreements = new JLabel("Path to Folder with Agreements:");
-	JLabel	lbPathToTemplates = new JLabel("Path to Templates Folder :");
+	JLabel	lbPathToTemplate = new JLabel("Path to Template of the Agreement :");
 	JLabel	lbPpathToWordApplication = new JLabel("Path to Word application:");
 	
 	
@@ -66,13 +66,13 @@ public class Settings extends JFrame {
 		
 		
 		lbPanel.add(lbPathToAgreements);
-		lbPanel.add(lbPathToTemplates);
+		lbPanel.add(lbPathToTemplate);
 		lbPanel.add(lbPpathToWordApplication);
 		lbPanel.add (createRegister);
 		lbPanel.add (clearRegister);
 		
 		contentPanel.add(pathToAgreements);
-		contentPanel.add(pathToTemplates);
+		contentPanel.add(pathToTemplate);
 		contentPanel.add(pathToWordApplication);
 		
 		browsePanel.add(BrowseButton1);
@@ -100,17 +100,14 @@ public class Settings extends JFrame {
 	        
 	    BrowseButton2.addActionListener(new ActionListener()  {
 	        public void actionPerformed(ActionEvent e)   {
-	        	JFileChooser chooser = new JFileChooser(); 
-	    	    chooser.setCurrentDirectory(new java.io.File("."));
-	    	    chooser.setDialogTitle("Get Path to Templates Folder");
-	    	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	    	    chooser.setAcceptAllFileFilterUsed(false);
-	    	    if (chooser.showOpenDialog(pathToTemplates) == JFileChooser.APPROVE_OPTION) { 
-	    	    	String k=chooser.getSelectedFile().toString();
-	    	    	pathToTemplates.setText(k);
+	            JFileChooser fileChooser = new JFileChooser();
+	            fileChooser.showOpenDialog(BrowseButton2);
+	            File selectedFile = fileChooser.getSelectedFile();
+	            if(selectedFile != null) {
+	            	pathToTemplate.setText(selectedFile.getAbsolutePath());
 	             }
 	        }
-	      });		
+	     });		
 		
 		BrowseButton3.addActionListener(new ActionListener()  {
 	        public void actionPerformed(ActionEvent e)   {
