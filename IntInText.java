@@ -59,7 +59,7 @@ package AgreementMaker;
 	String res="";
 	Field fild;
 	try{
-	Class clas = IntInText.class;
+	Class<IntInText> clas = IntInText.class;
 
 	if(no.charAt(no.length()-1)!='0'){
 	fild = IntInText.class.getField("x"+no.charAt(no.length()-1));
@@ -71,7 +71,7 @@ package AgreementMaker;
 	res=" "+fild.get(clas).toString();
 	}
 	//if(x>19 && no.charAt(no.length()-1)!='0'){
-	if(x>19){
+	if(x>19 && no.charAt(no.length()-2)!='0'){
 	fild = IntInText.class.getField("x"+no.charAt(no.length()-2)+"0");
 	res=" "+fild.get(clas).toString()+res;
 	}
@@ -130,7 +130,7 @@ package AgreementMaker;
 	}
 
 	public static void main(String [] argm){
-	int x = 1220;
+	int x = 700;
 	String text = convert(x);
 	System.out.println("text="+text);	
 	}

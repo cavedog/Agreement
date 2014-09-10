@@ -15,13 +15,20 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.jdesktop.swingx.JXDatePicker;
 
 public class mainFrame extends JFrame {
-
 	
 // Describing Buttons
 	JButton 	addAgreementButton = new JButton("+ New Agreement");
@@ -35,21 +42,21 @@ public class mainFrame extends JFrame {
 	
 	//Labels
 	
-	JLabel	lbDateOfAgreement = new JLabel("Date of Agreement:");
-	JLabel	lbNameOfCourse = new JLabel("Course :");
-	JLabel	lbtrainingPeriod = new JLabel("Training period (month) :");
-	JLabel	lbDateOfStart = new JLabel("Start education :");
-	JLabel	lbcostTraining = new JLabel("Total Cost of Course :");
-	JLabel	lbcostTrainingP1 = new JLabel("Cost of Course (part 1) :");
-	JLabel	lbcostTrainingP2 = new JLabel("Cost of Course (part 2) :");
-	JLabel	lbcostTrainingP3 = new JLabel("Cost of Course (part 3) :");
-	JLabel	lbSurname = new JLabel("Surname:");
-	JLabel	lbName = new JLabel("Name:");
-	JLabel	lbSecondName = new JLabel("Second name:");
-	JLabel	lbPassportNumber = new JLabel("Passport Number:");
-	JLabel	lbPassportIssuance = new JLabel("Passport Issuance:");
-	JLabel	lbInn = new JLabel("INN:");
-	JLabel	lbAdress = new JLabel("Adress:");
+	JLabel	lbDateOfAgreement = new JLabel("Дата Договору:");
+	JLabel	lbNameOfCourse = new JLabel("Курс :");
+	JLabel	lbtrainingPeriod = new JLabel("Тривалiсть курсу (мiс) :");
+	JLabel	lbDateOfStart = new JLabel("Початок навчання :");
+	JLabel	lbcostTraining = new JLabel("Загальна вартiсть навчання :");
+	JLabel	lbcostTrainingP1 = new JLabel("Перша частина сплати :");
+	JLabel	lbcostTrainingP2 = new JLabel("Друга частина сплати :");
+	JLabel	lbcostTrainingP3 = new JLabel("Третя частина сплати :");
+	JLabel	lbSurname = new JLabel("Прiзвище:");
+	JLabel	lbName = new JLabel("Iм'я:");
+	JLabel	lbSecondName = new JLabel("По-батьковi:");
+	JLabel	lbPassportNumber = new JLabel("Номер паспорта:");
+	JLabel	lbPassportIssuance = new JLabel("Паспорт виданий:");
+	JLabel	lbInn = new JLabel("IПН: ");
+	JLabel	lbAdress = new JLabel("Адреса: ");
 	JLabel	lbEMail = new JLabel("E-mail:");
 	
 	
@@ -58,11 +65,11 @@ public class mainFrame extends JFrame {
 	JTextField	dateOfAgreement = new JTextField(50);
 	JTextField	nameOfCourse = new JTextField(50);
 	JTextField	dateOfStart = new JTextField(50);
-	JTextField	trainingPeriod = new JTextField(50);
-	JTextField	costTraining = new JTextField(50);
-	JTextField	costTrainingP1 = new JTextField("---",50);
-	JTextField	costTrainingP2 = new JTextField("---",50);
-	JTextField	costTrainingP3 = new JTextField("---",50);
+	JTextField	trainingPeriod = new JTextField("3",50);
+	JTextField	costTraining = new JTextField("0",50);
+	JTextField	costTrainingP1 = new JTextField("0",50);
+	JTextField	costTrainingP2 = new JTextField("0",50);
+	JTextField	costTrainingP3 = new JTextField("0",50);
 	JTextField	surname = new JTextField(50);
 	JTextField	name = new JTextField(50);
 	JTextField	secondName = new JTextField(50);
@@ -101,6 +108,9 @@ public class mainFrame extends JFrame {
 		add(labelsPanel,BorderLayout.WEST );
 		add(datePanel,BorderLayout.EAST );
 		add(donePanel, BorderLayout.SOUTH);
+		
+		dateOfAgreement.setEditable(false);
+		dateOfStart.setEditable(false);
 		
 		// Date choosers
 		final SimpleDateFormat formatter;
@@ -245,7 +255,7 @@ public class mainFrame extends JFrame {
 			dateOfAgreement.setText(null);
 			nameOfCourse.setText(null);
 			dateOfStart.setText(null);
-			trainingPeriod.setText(null);
+			trainingPeriod.setText("3");
 			surname.setText(null);
 			name.setText(null);
 			secondName.setText(null);
@@ -254,6 +264,10 @@ public class mainFrame extends JFrame {
 			inn.setText(null);
 			adress.setText(null);
 			eMail.setText(null);
+			costTraining.setText("0");
+			costTrainingP1.setText("0");
+			costTrainingP2.setText("0");
+			costTrainingP3.setText("0");
 		    }
 		});
 		
@@ -261,15 +275,92 @@ public class mainFrame extends JFrame {
 		test.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int Ct=Integer.parseInt (costTraining.getText());
-				int CtP1= Integer.parseInt (costTraining.getText());
-				int CtP2= Integer.parseInt (costTraining.getText());
-				int CtP3= Integer.parseInt (costTraining.getText());
+				int CtP1= Integer.parseInt (costTrainingP1.getText());
+				int CtP2= Integer.parseInt (costTrainingP2.getText());
+				int CtP3= Integer.parseInt (costTrainingP3.getText());
 				
 				String CtToText= IntInText.convert(Ct);  
-				System.out.println(CtToText);
+				costTraining.setText(IntInText.convert(Ct));
+				costTrainingP1.setText(IntInText.convert(CtP1));
+				costTrainingP2.setText(IntInText.convert(CtP2));
+				costTrainingP3.setText(IntInText.convert(CtP3));
+			
 			}
 		});
+		
+		formAgreementButton.addActionListener(new ActionListener() {
+		    
+			public void actionPerformed(ActionEvent e) {
+				   				   
+				   String dateOfAgreementP=dateOfAgreement.getText();
+				   String surnameP=surname.getText();
+				   String nameP=name.getText();
+				   String SecondNameP=secondName.getText();
+				   String passportNumberP=passportNumber.getText();
+				   String passportIssuanceP=passportIssuance.getText();
+					String innP=inn.getText();
+					String adressP=adress.getText();
+					String eMailP=eMail.getText();
+					String nameOfCourseP=nameOfCourse.getText();
+					String dateOfStartP=dateOfStart.getText();
+					int trainingPeriodP=0;
+					double costTrainingP=0;
+					double costTrainingPart1P = 0;
+					double costTrainingPart2P=0;
+					double costTrainingPart3P=0;					;
+					
+					try {
+					trainingPeriodP=Integer.parseInt (trainingPeriod.getText());
+					} catch (Exception d) {
+					JOptionPane.showMessageDialog(null, "Введiть коректно 'Тривалiсть курсу (мiс)'");
+					}
+					try {
+					costTrainingP=Double.parseDouble (costTraining.getText());
+					} catch (Exception d) {
+						JOptionPane.showMessageDialog(null, "Введiть коректно 'Загальна вартiсть навчання'");
+						}
+					try {
+					costTrainingPart1P=Double.parseDouble (costTrainingP1.getText());
+					} catch (Exception d) {
+						JOptionPane.showMessageDialog(null, "Введiть коректно 'Перша частина сплати'");
+						}
+					try {
+					costTrainingPart2P=Double.parseDouble (costTrainingP2.getText());
+			   } catch (Exception d) {
+					JOptionPane.showMessageDialog(null, "Введiть коректно 'Друга частина сплати'");
+					}
+					try {
+					costTrainingPart3P=Double.parseDouble (costTrainingP3.getText());
+					} catch (Exception d) {
+						System.out.println("Введiть коректно Третя частина сплати");
+					}
+				   if ((costTrainingPart1P+costTrainingPart2P+costTrainingPart3P)==costTrainingP) {
+					  
+			        	
+			    		try {
+			    			 Connection conn=null;
+					    	Statement stmt = null;
+			    			Class.forName("org.sqlite.JDBC");
+			    			System.out.println("Connection to db ....");
+			    			conn= DriverManager.getConnection("jdbc:sqlite:Agreement.db");
+			    			System.out.println("Connection to db OK2");
+			    			String sql = "insert into Agreements (dateOfAgreement, surname, name, secondName, passportNumber, passportIssuance, inn, adress, eMail, nameOfCourse, dateOfStart, trainingPeriod, costTraining, costTrainingPart1, costTrainingPart2 ,costTrainingPart3) values ("+dateOfAgreementP+surnameP + nameP+ SecondNameP+ passportNumberP+ passportIssuanceP+ innP+adressP+ eMailP+ nameOfCourseP+dateOfStartP+ trainingPeriodP + costTrainingP+ costTrainingPart1P+costTrainingPart2P+costTrainingPart3P+")";
+			    		   stmt.execute(sql);	
+			    		    stmt.close();
+			    			conn.close();
+					    }  catch (ClassNotFoundException ex)  {
+					    	ex.printStackTrace();
+					    }
+					    		catch (SQLException ey){
+					    			ey.printStackTrace();
+					    		} 
+			    		
+					   } else JOptionPane.showMessageDialog(null, "Перевiрте розбиття оплати");
+				   
+				  			
 				
+			    }
+			});
 				
 	}
 
