@@ -6,14 +6,21 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -25,7 +32,6 @@ public class Settings extends JFrame {
     JTextField	pathToAgreements = new JTextField(30);
 	JTextField	pathToTemplate = new JTextField(30);
 	JTextField	pathToWordApplication = new JTextField(30);
-	JButton	createRegister = new JButton ("Create the Register");
 	JButton	clearRegister = new JButton ("Clear the Register");
 	JButton	saveButton = new JButton ("Save settings");
 	JButton BrowseButton1 = new JButton("Browse");
@@ -68,7 +74,6 @@ public class Settings extends JFrame {
 		lbPanel.add(lbPathToAgreements);
 		lbPanel.add(lbPathToTemplate);
 		lbPanel.add(lbPpathToWordApplication);
-		lbPanel.add (createRegister);
 		lbPanel.add (clearRegister);
 		
 		contentPanel.add(pathToAgreements);
@@ -119,6 +124,35 @@ public class Settings extends JFrame {
 	             }
 	        }
 	     });
+		clearRegister.addActionListener(new ActionListener()  {
+	        public void actionPerformed(ActionEvent e)   {
+	        		        int result = JOptionPane.showConfirmDialog(null,
+	                        "Ви дійсно бажаєте очистити Реєстр Договорів ?"
+	                        , "Питання : ", JOptionPane.YES_NO_OPTION);
+	                    if (result == JOptionPane.YES_OPTION) {
+	                    	try {
+	                    	Connection conn=null;
+			    			Statement stmt=null;
+			    			Class.forName("org.sqlite.JDBC");
+			    			System.out.println("Connection to db ....");
+			    			conn= DriverManager.getConnection("jdbc:sqlite:Agreement.db");
+			    			System.out.println("Connection to db OK3");
+			    			stmt = conn.createStatement();
+			    			String sql = "DELETE FROM Agreements";
+			    		    stmt.executeUpdate(sql);	
+			    		    stmt.close();
+			    			conn.close();
+			    		 }  catch (ClassNotFoundException ex)  {
+					    	ex.printStackTrace();
+					    }
+					    		catch (SQLException ey){
+					    			ey.printStackTrace();
+					    		} 
+	                    }
+	          }
+	       
+	     });
+				
 	}
 }
 

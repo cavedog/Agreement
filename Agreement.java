@@ -12,6 +12,7 @@ public class Agreement {
 	private String passportIssuanceP;
 	private String innP;
 	private String adressP;
+	private String phoneP;
 	private String eMailP;
 	private String nameOfCourseP;
 	private String dateOfStartP;
@@ -22,9 +23,10 @@ public class Agreement {
 	private double costTrainingPart3P;
 	
     public Agreement(int numberOfAgreement, String dateOfAgreement, String surname, String name, String SecondName,String passportNumber, String passportIssuance,String inn,
-			String adress,String eMail, String nameOfCourse, String dateOfStart, int trainingPeriod, double costTraining, double costTrainingPart1,
+			String adress,String phone,String eMail, String nameOfCourse, String dateOfStart, int trainingPeriod, double costTraining, double costTrainingPart1,
 			double costTrainingPart2, double costTrainingPart3) {
-    	setDateOfAgreementP(dateOfAgreement);
+    	numberOfAgreementP=numberOfAgreement;
+    	dateOfAgreementP= dateOfAgreement;
     	surnameP=surname;
     	nameP=name;
     	SecondNameP=SecondName;
@@ -32,9 +34,10 @@ public class Agreement {
     	passportIssuanceP=passportIssuance;
     	innP=inn;
     	adressP=adress;
+    	phoneP=phone;
     	eMailP=eMail;
     	nameOfCourseP=nameOfCourse;
-    	setDateOfStartP(dateOfStart);
+    	dateOfStartP=dateOfStart;
     	trainingPeriodP=trainingPeriod;
     	costTrainingP=costTraining;
     	costTrainingPart1P=costTrainingPart1;
@@ -193,6 +196,16 @@ public int getNumberOfAgreementP() {
 
 public void setNumberOfAgreementP(int numberOfAgreementP) {
 	this.numberOfAgreementP = numberOfAgreementP;
+}
+
+
+public String getPhoneP() {
+	return phoneP;
+}
+
+
+public void setPhoneP(String phoneP) {
+	this.phoneP = phoneP;
 }
 	
 	}

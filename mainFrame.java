@@ -57,7 +57,9 @@ public class mainFrame extends JFrame {
 	JLabel	lbPassportIssuance = new JLabel("Паспорт виданий:");
 	JLabel	lbInn = new JLabel("IПН: ");
 	JLabel	lbAdress = new JLabel("Адреса: ");
+	JLabel	lbPhone = new JLabel("Телефон:");
 	JLabel	lbEMail = new JLabel("E-mail:");
+	
 	
 	
 	
@@ -77,6 +79,7 @@ public class mainFrame extends JFrame {
 	JTextField	passportIssuance = new JTextField(50);
 	JTextField	inn = new JTextField(50);
 	JTextField	adress = new JTextField(50);
+	JTextField	phone = new JTextField(50);
 	JTextField	eMail = new JTextField(50);
 	
 	
@@ -89,7 +92,7 @@ public class mainFrame extends JFrame {
 	JPanel 		donePanel 	= new JPanel();
     
 	/**
-	 * Create the frame.
+	 * Create the MAIN_Frame.
 	 */
 	public mainFrame() {
 		super();
@@ -99,9 +102,9 @@ public class mainFrame extends JFrame {
 		//setResizable(false);
 		
 		toolPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		labelsPanel.setLayout(new GridLayout(16,1));
-		datePanel.setLayout(new GridLayout(16,1));
-		enterPanel.setLayout(new GridLayout(16,1));
+		labelsPanel.setLayout(new GridLayout(17,1));
+		datePanel.setLayout(new GridLayout(17,1));
+		enterPanel.setLayout(new GridLayout(17,1));
 		
 		add(enterPanel, BorderLayout.CENTER);
 		add(toolPanel, BorderLayout.NORTH);
@@ -198,6 +201,7 @@ public class mainFrame extends JFrame {
 		labelsPanel.add(lbPassportIssuance);
 		labelsPanel.add(lbInn);
 		labelsPanel.add(lbAdress);
+		labelsPanel.add(lbPhone);
 		labelsPanel.add(lbEMail);
 		
 		
@@ -216,6 +220,7 @@ public class mainFrame extends JFrame {
 		enterPanel.add(passportIssuance);
 		enterPanel.add(inn);
 		enterPanel.add(adress);
+		enterPanel.add(phone);
 		enterPanel.add(eMail);
 	
 		datePanel.add (nameCourse);
@@ -263,6 +268,7 @@ public class mainFrame extends JFrame {
 			passportIssuance.setText(null);
 			inn.setText(null);
 			adress.setText(null);
+			phone.setText(null);
 			eMail.setText(null);
 			costTraining.setText("0");
 			costTrainingP1.setText("0");
@@ -271,6 +277,28 @@ public class mainFrame extends JFrame {
 		    }
 		});
 		
+		addAgreementButton.addActionListener(new ActionListener() {
+		    
+			   public void actionPerformed(ActionEvent e) {
+				dateOfAgreement.setText(null);
+				nameOfCourse.setText(null);
+				dateOfStart.setText(null);
+				trainingPeriod.setText("3");
+				surname.setText(null);
+				name.setText(null);
+				secondName.setText(null);
+				passportNumber.setText(null);
+				passportIssuance.setText(null);
+				inn.setText(null);
+				adress.setText(null);
+				phone.setText(null);
+				eMail.setText(null);
+				costTraining.setText("0");
+				costTrainingP1.setText("0");
+				costTrainingP2.setText("0");
+				costTrainingP3.setText("0");
+			    }
+			});
 			
 		test.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -300,6 +328,7 @@ public class mainFrame extends JFrame {
 				   String passportIssuanceP=passportIssuance.getText();
 					String innP=inn.getText();
 					String adressP=adress.getText();
+					String phoneP=adress.getText();
 					String eMailP=eMail.getText();
 					String nameOfCourseP=nameOfCourse.getText();
 					String dateOfStartP=dateOfStart.getText();
@@ -332,36 +361,57 @@ public class mainFrame extends JFrame {
 					try {
 					costTrainingPart3P=Double.parseDouble (costTrainingP3.getText());
 					} catch (Exception d) {
-						System.out.println("Введiть коректно Третя частина сплати");
+						JOptionPane.showMessageDialog(null, "Введiть коректно 'Третя частина сплати'");
 					}
 				   if ((costTrainingPart1P+costTrainingPart2P+costTrainingPart3P)==costTrainingP) {
 					  
 			        	
 			    		try {
-			    			 Connection conn=null;
-					    	Statement stmt = null;
+			    			Connection conn=null;
+			    			Statement stmt=null;
 			    			Class.forName("org.sqlite.JDBC");
 			    			System.out.println("Connection to db ....");
 			    			conn= DriverManager.getConnection("jdbc:sqlite:Agreement.db");
 			    			System.out.println("Connection to db OK2");
-			    			String sql = "insert into Agreements (dateOfAgreement, surname, name, secondName, passportNumber, passportIssuance, inn, adress, eMail, nameOfCourse, dateOfStart, trainingPeriod, costTraining, costTrainingPart1, costTrainingPart2 ,costTrainingPart3) values ("+dateOfAgreementP+surnameP + nameP+ SecondNameP+ passportNumberP+ passportIssuanceP+ innP+adressP+ eMailP+ nameOfCourseP+dateOfStartP+ trainingPeriodP + costTrainingP+ costTrainingPart1P+costTrainingPart2P+costTrainingPart3P+")";
-			    		   stmt.execute(sql);	
+			    			stmt = conn.createStatement();
+			    			String sql = "insert into Agreements (dateOfAgreement, surname, name, secondName, passportNumber, "
+			    					+ "passportIssuance, inn, adress, phone, eMail, nameOfCourse, dateOfStart, trainingPeriod, costTraining, "
+			    					+ "costTrainingPart1, costTrainingPart2 ,costTrainingPart3) "
+			    					+ "values ('"+ dateOfAgreementP+"','"+surnameP+"','" + nameP+"','"+ SecondNameP+"','"+ passportNumberP
+			    					+"','"+ passportIssuanceP+"','"+ innP+"','"+adressP+"','"+ phoneP+"','"+ eMailP+"','"+ nameOfCourseP+"','"
+			    					+dateOfStartP+"',"+ trainingPeriodP+"," + costTrainingP+","+ costTrainingPart1P+","
+			    					+costTrainingPart2P+","+costTrainingPart3P + ")";
+			    		   stmt.executeUpdate(sql);	
 			    		    stmt.close();
 			    			conn.close();
+			    			
+			    			
 					    }  catch (ClassNotFoundException ex)  {
 					    	ex.printStackTrace();
 					    }
 					    		catch (SQLException ey){
 					    			ey.printStackTrace();
 					    		} 
-			    		
-					   } else JOptionPane.showMessageDialog(null, "Перевiрте розбиття оплати");
-				   
-				  			
-				
-			    }
+			    		//HelperWord helper = new HelperWord();
+			           // helper.createWord();
+			            JOptionPane.showMessageDialog(null, "Договір збережений ");  
+				   } else JOptionPane.showMessageDialog(null, "Перевiрте розбиття оплати");
+				   }
 			});
-				
+		viewRegisterButton.addActionListener(new ActionListener() {
+		    
+			public void actionPerformed(ActionEvent e) {
+				try {
+					register dialog = new register();
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception d) {
+					d.printStackTrace();
+				}			   
+				   
+					
+			    }
+			});		
 	}
 
 }
