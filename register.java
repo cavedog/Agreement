@@ -20,7 +20,7 @@ public class register extends JFrame{
 	
 	    register(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1200, 600);
+		setSize(1400, 600);
 		setTitle("AGREEMENTS REGISTER of 'FABRIKA'");
 		
 		JPanel panel = new JPanel(new BorderLayout());
@@ -33,7 +33,6 @@ public class register extends JFrame{
 		center.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS); 
 		
 		panel.add(center, BorderLayout.CENTER);
-		
 		this.add(panel);
 		}
 	
@@ -44,14 +43,11 @@ public class register extends JFrame{
 		
 		try {
 			Class.forName("org.sqlite.JDBC");
-			System.out.println("Connection to db ....");
 			conn= DriverManager.getConnection("jdbc:sqlite:Agreement.db");
-			System.out.println("Connection to db OK");
-		
+					
 			stmt=conn.createStatement();
 		    String sql = "select * from Agreements";
 		    ResultSet rs= stmt.executeQuery(sql);
-		    
 		    
 		    while (rs.next()) {
 		    			    	  	
@@ -71,13 +67,15 @@ public class register extends JFrame{
 		    	int trainingPeriodP=rs.getInt("trainingPeriod");
 		    	double costTrainingP=rs.getDouble("costTraining");
 		    	double costTrainingPart1P=rs.getDouble("costTrainingPart1");
+		    	String ddate1P=rs.getString("ddate1");
 		    	double costTrainingPart2P=rs.getDouble("costTrainingPart2");
+		    	String ddate2P=rs.getString("ddate2");
 		    	double costTrainingPart3P=rs.getDouble("costTrainingPart3");
-		    	
+		    	String ddate3P=rs.getString("ddate3");
 		    	    		    	
 		    	Agreement e= new Agreement(numberOfAgreementP, dateOfAgreementP, surnameP, nameP, secondNameP, passportNumberP, passportIssuanceP, innP,
-		    			adressP, phoneP, eMailP, nameOfCourseP, dateOfStartP, trainingPeriodP, costTrainingP, costTrainingPart1P,
-		    			costTrainingPart2P, costTrainingPart3P);
+		    			adressP, phoneP, eMailP, nameOfCourseP, dateOfStartP, trainingPeriodP, costTrainingP, costTrainingPart1P,ddate1P,
+		    			costTrainingPart2P, ddate2P, costTrainingPart3P, ddate3P);
 		    	agreemnt.add(e);
 		    	 
 		    	}
@@ -106,25 +104,20 @@ public class register extends JFrame{
 			v.add(agreemnt.get(i).getDateOfStartP());
 			v.add(agreemnt.get(i).getCostTraining());
 			v.add(agreemnt.get(i).getCostTrainingPart1P());
+			v.add(agreemnt.get(i).getDdate1P());
 			v.add(agreemnt.get(i).getCostTrainingPart2P());
+			v.add(agreemnt.get(i).getDdate2P());
 			v.add(agreemnt.get(i).getCostTrainingPart3P());
+			v.add(agreemnt.get(i).getDdate3P());
 			
 			values[i] = v.toArray();
 		}
 		
 		String[] columnsNames = {"Номер", "Дата", "Прiзвище", "Iм'я","Адреса","Телефон","E-mail",
-				"Курс","Початок навчання","Загальна вартiсть","Частина сплати 1","Частина сплати 2","Частина сплати 3"};
+				"Курс","Початок навчання","Загальна вартiсть","Частина сплати 1", "Термiн 1","Частина сплати 2","Термiн 2","Частина сплати 3", "Термiн 3"};
 		
 		DefaultTableModel tableModel = (DefaultTableModel) registerTable.getModel();
 		tableModel.setDataVector(values, columnsNames);
 		tableModel.fireTableDataChanged();
-		
-	
-	
-	
-	
-	
-	
-
-}
+      }
 }

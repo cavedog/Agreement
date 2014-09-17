@@ -19,12 +19,15 @@ public class Agreement {
 	private int trainingPeriodP;
 	private double costTrainingP;
 	private double costTrainingPart1P;
+	private String ddate1P;
 	private double costTrainingPart2P;
+	private String ddate2P;
 	private double costTrainingPart3P;
+	private String ddate3P;
 	
     public Agreement(int numberOfAgreement, String dateOfAgreement, String surname, String name, String SecondName,String passportNumber, String passportIssuance,String inn,
-			String adress,String phone,String eMail, String nameOfCourse, String dateOfStart, int trainingPeriod, double costTraining, double costTrainingPart1,
-			double costTrainingPart2, double costTrainingPart3) {
+			String adress,String phone,String eMail, String nameOfCourse, String dateOfStart, int trainingPeriod, double costTraining, double costTrainingPart1, String ddate1,
+			double costTrainingPart2, String ddate2, double costTrainingPart3, String ddate3) {
     	numberOfAgreementP=numberOfAgreement;
     	dateOfAgreementP= dateOfAgreement;
     	surnameP=surname;
@@ -41,8 +44,11 @@ public class Agreement {
     	trainingPeriodP=trainingPeriod;
     	costTrainingP=costTraining;
     	costTrainingPart1P=costTrainingPart1;
+    	setDdate1P(ddate1);
     	costTrainingPart2P=costTrainingPart2;
+    	setDdate2P(ddate2);
     	costTrainingPart3P=costTrainingPart3;
+    	setDdate3P(ddate3);
     	}
 
 	
@@ -206,6 +212,36 @@ public String getPhoneP() {
 
 public void setPhoneP(String phoneP) {
 	this.phoneP = phoneP;
+}
+
+
+public String getDdate1P() {
+	return ddate1P;
+}
+
+
+public void setDdate1P(String ddate1p) {
+	ddate1P = ddate1p;
+}
+
+
+public String getDdate2P() {
+	return ddate2P;
+}
+
+
+public void setDdate2P(String ddate2p) {
+	ddate2P = ddate2p;
+}
+
+
+public String getDdate3P() {
+	return ddate3P;
+}
+
+
+public void setDdate3P(String ddate3p) {
+	ddate3P = ddate3p;
 }
 	
 	}

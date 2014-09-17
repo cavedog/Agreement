@@ -103,14 +103,10 @@ package AgreementMaker;
 	}
 	}	
 
-
-
 	if(x>9999 && no.charAt(no.length()-5)=='1'){
 	fild = IntInText.class.getField("x1"+no.charAt(no.length()-4));
 	res=" "+fild.get(clas).toString()+" "+xõx1000+res;
 	}
-
-
 
 	if(x>19999){
 
@@ -119,7 +115,6 @@ package AgreementMaker;
 	res=" "+fild.get(clas).toString()+" "+xõx1000+res;
 	else
 	res=" "+fild.get(clas).toString()+res;	
-
 	}	
 
 	}catch(Exception e){
@@ -127,12 +122,6 @@ package AgreementMaker;
 	}
 
 	return res;
-	}
-
-	public static void main(String [] argm){
-	int x = 700;
-	String text = convert(x);
-	System.out.println("text="+text);	
 	}
 
 	}
