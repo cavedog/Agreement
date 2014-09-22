@@ -69,7 +69,7 @@ public class Settings extends JFrame {
 		savePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		browsePanel.setLayout(new GridLayout(5,1));
 		
-		String[] osSelectAr  = { "Windows", "Linux"};
+		String[] osSelectAr  = {"osSelect", "Windows", "Linux"};
 		JComboBox osSelect = new JComboBox(osSelectAr);
 		osSelect.setEditable(true);
 		osSelect.setSelectedIndex(0);
@@ -217,9 +217,10 @@ public class Settings extends JFrame {
 			    			sql = "insert into PathTable (pathToAgreements, pathToTemplate, pathToWordApplication, operationSystem) "
 			    					+ "values ('"+ pathToAgreements.getText()+"','"+pathToTemplate.getText()+"','" + pathToWordApplication.getText()+"','"+os+"')";
 			    		    stmt.executeUpdate(sql);	
-			    		    
+			    		   
 			    		    stmt.close();
 			    			conn.close();
+			    			dispose();
 			    			}  catch (ClassNotFoundException ex)  {
 					    	ex.printStackTrace();
 					    }

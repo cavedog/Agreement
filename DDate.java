@@ -121,6 +121,7 @@ public class DDate extends JFrame{
 		        	ddate1P=ddate1.getText();
 		        	ddate2P=ddate2.getText();
 		        	ddate3P=ddate3.getText();
+		        	dispose();
 		         }
 		     });
 		        

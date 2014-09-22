@@ -21,7 +21,7 @@ public class GUI {
     		
     		javax.swing.SwingUtilities.invokeLater(new Runnable () {
 				public void run() {
-					createGui();
+				createGui();
 				}
 			});	
     		    		
@@ -43,11 +43,11 @@ public class GUI {
     		    	operationSystem=rs.getString("operationSystem");
     		    }
     		    if (pathToAgreements == null && pathToTemplate ==null && pathToWordApplication ==null && operationSystem==null) {
-    		    	JOptionPane.showMessageDialog(null, "Виберіть необхідні настройки");
+    		    	JOptionPane.showMessageDialog(null, "Виберіть необхідні налаштування");
         			createPathTable();	
-        			
+
     		    } 
-    		    
+
     			rs.close();
     			stmt.close();
     			conn.close();

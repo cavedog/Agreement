@@ -499,17 +499,32 @@ public class mainFrame extends JFrame {
 			                // Создаем новый объект MS Word на основе существующего и значений полей слияния
 			                WordprocessingMLPackage output =MailMerger.getConsolidatedResultCrude(wordMLPackage, data);
 			                // Сохраняем объект в файл
-			                output.save(new File(pathToAgreementsQ+ "\\Agreement" + "_" +surname.getText()+ ".docx"));
+			                
 			                
 			                if (operationSystemQ.equals("Windows")) {
+			                	output.save(new File(pathToAgreementsQ+ "\\Agreement" + "_" +surname.getText()+ ".docx"));
 			                	Runtime r = Runtime. getRuntime();
 								Process p = null;
 								try {
+									
 									p = r.exec("cmd.exe /r " + pathToAgreementsQ+ "\\Agreement" + "_" +surname.getText()+ ".docx");
 									}
 								catch (Exception ee) {
 									JOptionPane.showMessageDialog(null, "Error in running of DOCx editor");
 								}	
+			                } else {
+			                	File of=new File(pathToAgreementsQ+ "/Agreement" + "_" +surname.getText()+ ".docx");
+			                	output.save(of);
+			                	/*Runtime r = Runtime. getRuntime();
+								Process p = null;
+                                    try {
+									p = r.exec("sh -c " +pathToWordApplicationQ);
+									
+                                    }
+								catch (Exception ee) {
+									JOptionPane.showMessageDialog(null, "Error in running of DOCx editor");
+								}	
+			                	 */               	
 			                }
 			                
 						    
